@@ -135,6 +135,9 @@ Thumbs.db
 .env.test.local
 .env.production.local
 
+# Keep example files
+!.env.example
+
 # ===========================
 # Docker
 # ===========================

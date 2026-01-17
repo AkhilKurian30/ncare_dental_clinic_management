@@ -1,0 +1,191 @@
+.sidenav-container {
+  height: 100vh;
+  display: flex;
+}
+
+.sidenav {
+  width: 260px;
+  background-color: #ffffff;
+  color: #1e293b;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #e2e8f0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  overflow-x: hidden;
+
+  .sidenav-header {
+    padding: 24px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+
+    .clinic-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+      color: #3b82f6;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+  }
+
+  .nav-list {
+    flex: 1;
+    padding-top: 8px;
+    overflow-x: hidden;
+
+    .nav-item {
+      margin: 4px 8px;
+      border-radius: 8px;
+      color: #475569;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: #f1f5f9;
+        color: #3b82f6;
+
+        mat-icon {
+          color: #3b82f6;
+        }
+      }
+
+      mat-icon {
+        color: #64748b;
+      }
+
+      &.active-link {
+        background-color: #dbeafe;
+        color: #2563eb;
+        font-weight: 500;
+        border-left: 3px solid #2563eb;
+        margin-left: 8px;
+        padding-left: 13px;
+
+        mat-icon {
+          color: #2563eb;
+        }
+      }
+    }
+  }
+
+  .sidenav-footer {
+    padding: 16px;
+    border-top: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #f1f5f9;
+      }
+
+      mat-icon {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+        color: #3b82f6;
+      }
+
+      .user-details {
+        display: flex;
+        flex-direction: column;
+
+        .user-name {
+          font-size: 14px;
+          font-weight: 500;
+          color: #1e293b;
+        }
+
+        .user-role {
+          font-size: 12px;
+          color: #64748b;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+    }
+  }
+}
+
+.sidenav-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #f1f5f9;
+}
+
+.top-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .toolbar-title {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
+
+.user-menu-header {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .user-menu-email {
+    font-size: 12px;
+    color: #64748b;
+  }
+}
+
+.page-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .sidenav {
+    width: 240px;
+  }
+
+  .toolbar-title {
+    font-size: 16px;
+  }
+
+  .page-content {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidenav {
+    width: 100%;
+  }
+
+  .page-content {
+    padding: 12px;
+  }
+}

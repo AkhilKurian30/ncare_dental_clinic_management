@@ -1,214 +1,234 @@
 # Dental Clinic Management System
 
-A modern dental clinic management system built with a monorepo architecture.
+A comprehensive dental clinic management system built with modern technologies and a microservices architecture.
 
-## Tech Stack
+## 🚀 Tech Stack
 
-- **Backend**: Java 25 LTS with Spring Boot 3.5.x
-- **Frontend**: Angular 21
-- **Database**: PostgreSQL 17
-- **Containerization**: Docker & Docker Compose
+- **Backend**: Java 25 with Spring Boot 3.5.x
+- **Frontend**: Angular 21+ (to be implemented)
+- **Database**: H2 In-Memory (local development)
+- **Future Migration**: PostgreSQL 16.x (production)
+- **API Documentation**: Swagger/OpenAPI 3.0
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 .
-├── backend/          # Spring Boot REST API
-├── frontend/         # Angular web application
-├── docker-compose.yml
-├── .gitignore
-└── README.md
+├── backend/                      # Spring Boot REST API
+│   ├── src/main/java/com/dental/ # Java source code
+│   ├── src/main/resources/       # Configuration files
+│   ├── pom.xml                   # Maven dependencies
+│   ├── README.md                 # Backend documentation
+│   ├── SETUP.md                  # Setup instructions
+│   └── MIGRATION_TO_POSTGRESQL.md # PostgreSQL migration guide
+├── frontend/                     # Angular app (to be implemented)
+├── CURSOR_PROMPTS.md             # 📌 START HERE - Step-by-step prompts
+└── README.md                     # This file
 ```
 
-## Prerequisites
+## ⚡ Quick Start (Local Development)
 
-- Docker Desktop (latest version)
-- Docker Compose V2
-- Java 25 (for local development)
-- Node.js 20+ (for local development)
-- Maven or Gradle (for backend)
-- Angular CLI (for frontend)
+### Step 1: Install Prerequisites
+- Install JDK 25
+- Install Maven 3.9+
+- No database installation needed!
 
-## Quick Start with Docker Compose
-
-### 1. Clone the Repository
-
-```bash
-git clone <repository-url>
-cd ncare_dental_clinic_management
+### Step 2: Run the Backend
+```powershell
+cd backend
+mvn spring-boot:run
 ```
 
-### 2. Run with Docker Compose
+### Step 3: Access the Application
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **H2 Console**: http://localhost:8080/h2-console
+- **Health Check**: http://localhost:8080/api/health
 
-Start all services (backend, frontend, and PostgreSQL):
+### 📌 Start Building Features
+Open `CURSOR_PROMPTS.md` and follow the prompts sequentially!
 
-```bash
-docker-compose up -d
-```
+## 💻 Local Development (Without Docker)
 
-### 3. Access the Application
+### Prerequisites for Local Development
 
-- **Frontend**: http://localhost:4200
-- **Backend API**: http://localhost:8080
-- **PostgreSQL**: localhost:5432 (username: `postgres`, password: `postgres`)
-
-### 4. Stop All Services
-
-```bash
-docker-compose down
-```
-
-To stop and remove volumes (including database data):
-
-```bash
-docker-compose down -v
-```
-
-## Local Development
+- JDK 25 - Download from [Oracle](https://www.oracle.com/java/technologies/downloads/) or [OpenJDK](https://jdk.java.net/25/)
+- Maven 3.9+
+- Node.js 20+ (for frontend later)
+- **No database installation required!** (H2 is embedded)
 
 ### Backend Development
 
-```bash
+```powershell
 cd backend
-./mvnw spring-boot:run
-# or with Gradle:
-# ./gradlew bootRun
+
+# Install dependencies and run
+mvn spring-boot:run
+
+# Or build and run JAR
+mvn clean package
+java -jar target/clinic-backend-0.0.1-SNAPSHOT.jar
 ```
 
-The backend API will be available at http://localhost:8080
+The backend API will be available at:
+- **API**: http://localhost:8080
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **H2 Console**: http://localhost:8080/h2-console
+
+📚 **Documentation:**
+- **`CURSOR_PROMPTS.md`** ← **START HERE!** Step-by-step prompts for Cursor AI
+- `backend/README.md` - Backend documentation
+- `backend/SETUP.md` - Installation guide
+- `backend/MIGRATION_TO_POSTGRESQL.md` - PostgreSQL migration (for production later)
 
 ### Frontend Development
 
-```bash
+```powershell
 cd frontend
+
+# Install dependencies
 npm install
+
+# Start dev server
 npm start
 ```
 
 The frontend will be available at http://localhost:4200
 
-### Database Access
+### H2 Database Access
 
-Connect to PostgreSQL locally:
+H2 in-memory database is automatically configured. Access the console:
+- **URL**: http://localhost:8080/h2-console
+- **JDBC URL**: `jdbc:h2:mem:dentaldb`
+- **Username**: `sa`
+- **Password**: (leave empty)
 
-```bash
-docker-compose up -d postgres
-```
+No additional configuration needed! Data persists in memory while the application runs.
 
-Connection details:
-- Host: localhost
-- Port: 5432
-- Database: clinic_db
-- Username: postgres
-- Password: postgres
+## 📖 Development Guide
 
-## Environment Configuration
+### Using Cursor AI Prompts (Full Stack Approach)
 
-### Backend Configuration
+1. Open `CURSOR_PROMPTS.md`
+2. Start with **Phase 0: Initial Setup** (Prompts 1-2)
+3. Then follow **Phase by Phase** - each phase builds a complete feature
+4. Copy one prompt → Paste into Cursor → Let it generate code
+5. **Test immediately** after backend + frontend prompts
+6. Move to next prompt
 
-Create `backend/src/main/resources/application-dev.properties` for local development:
+### Example Workflow (Phase 1 - Authentication):
 
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/clinic_db
-spring.datasource.username=postgres
-spring.datasource.password=postgres
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-```
+1. **Prompt 3-6**: Build backend (entities, services, controllers)
+   - Test in Swagger UI: http://localhost:8080/swagger-ui.html
+   - Try login/register endpoints
 
-### Frontend Configuration
+2. **Prompt 7-9**: Build frontend (login/register screens)
+   - Test in browser: http://localhost:4200
+   - Try logging in with test user
 
-Create `frontend/src/environments/environment.development.ts`:
+3. **Prompt 10**: Add auth guard
+   - Test: Try accessing routes without login
 
-```typescript
-export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8080/api'
-};
-```
+✅ Now authentication is complete! Move to Phase 2 (Dashboard)
 
-## Docker Images
+### Testing Your Work
 
-The project includes Dockerfiles for:
-- Backend: Multi-stage build with Maven/Gradle
-- Frontend: Multi-stage build with Node.js and nginx
-
-## API Documentation
-
-Once the backend is running, access the API documentation at:
-- Swagger UI: http://localhost:8080/swagger-ui.html
-- OpenAPI Spec: http://localhost:8080/v3/api-docs
-
-## Testing
-
-### Backend Tests
-
-```bash
-cd backend
-./mvnw test
-```
-
-### Frontend Tests
-
-```bash
-cd frontend
-npm test
-```
-
-## Building for Production
-
-### Build All Services
-
-```bash
-docker-compose build
-```
-
-### Build Individual Services
-
-```bash
+```powershell
 # Backend
-docker build -t clinic-backend ./backend
+cd backend
+mvn spring-boot:run
+# Access: http://localhost:8080/swagger-ui.html
 
-# Frontend
-docker build -t clinic-frontend ./frontend
+# Frontend (new terminal)
+cd frontend
+npm install  # first time only
+ng serve
+# Access: http://localhost:4200
+
+# H2 Console
+# Access: http://localhost:8080/h2-console
+# JDBC URL: jdbc:h2:mem:dentaldb
+# Username: sa
+# Password: (empty)
 ```
 
-## Troubleshooting
+### UI Components You'll Build:
+- 🔐 Login/Register screens
+- 📊 Dashboard with charts and cards
+- 📋 DataTables for all lists (patients, appointments, invoices, etc.)
+- 📅 Calendar view for appointments
+- 🎴 Card grids for treatments
+- 🖨️ Printable invoices
+- 📈 Analytics with pie/bar/line charts
+- 👤 User profile and settings
 
-### Port Conflicts
+## 🚀 Features To Build (54 Prompts)
 
-If ports 4200, 8080, or 5432 are already in use:
-1. Stop conflicting services
-2. Or modify ports in `docker-compose.yml`
+### Phase 1: Authentication & Setup
+- ⏳ Login & Registration screens (backend + frontend)
+- ⏳ Auth guard & routing
+- ⏳ Base entities & error handling
 
-### Database Connection Issues
+### Phase 2: Dashboard
+- ⏳ Statistics cards (today's appointments, revenue, patients)
+- ⏳ Pie charts (appointments by status)
+- ⏳ Bar charts (monthly revenue)
+- ⏳ Recent activity DataTable
 
-```bash
-# Check PostgreSQL logs
-docker-compose logs postgres
+### Phase 3: Patient Management
+- ⏳ Patient list with DataTable (search, sort, paginate)
+- ⏳ Add/Edit patient form
+- ⏳ Patient details with tabs (overview, appointments, history)
 
-# Restart database
-docker-compose restart postgres
-```
+### Phase 4: Appointment Management
+- ⏳ Calendar view with color-coded appointments
+- ⏳ Appointment list DataTable
+- ⏳ Book appointment dialog with slot availability
 
-### Clear Everything and Start Fresh
+### Phase 5: Treatment Management
+- ⏳ Treatment catalog (card grid layout)
+- ⏳ Add/Edit treatment forms
+- ⏳ Treatment records within appointments
 
-```bash
-docker-compose down -v
-docker-compose up -d --build
-```
+### Phase 6: Medicine & Prescriptions
+- ⏳ Medicine inventory with stock alerts
+- ⏳ Stock adjustment dialogs
+- ⏳ Prescription management within appointments
 
-## Contributing
+### Phase 7: Invoicing
+- ⏳ Invoice list with status chips
+- ⏳ Professional invoice layout (print-ready)
+- ⏳ Auto-generate invoices from appointments
 
-1. Create a feature branch
-2. Make your changes
-3. Run tests
-4. Submit a pull request
+### Phase 8: Expense Tracking
+- ⏳ Expense list DataTable with category filters
+- ⏳ Add/Edit expense forms
+- ⏳ Monthly expense summary
 
-## License
+### Phase 9: Reports & Analytics
+- ⏳ Reports dashboard with multiple charts
+- ⏳ Revenue vs Expense reports
+- ⏳ Appointment analytics by doctor/status/time
 
-[Add your license here]
+### Phase 10-12: Final Polish & Production
+- ⏳ User management (admin)
+- ⏳ Profile page & notifications
+- ⏳ Loading indicators & error handling
+- ⏳ PostgreSQL migration
 
-## Support
+## 📝 Current Status
 
-For issues and questions, please open an issue in the repository.
+✅ **Ready:** Spring Boot skeleton with H2 database  
+🔨 **Next:** Follow prompts in `CURSOR_PROMPTS.md` to build features  
+⏳ **Later:** Migrate to PostgreSQL for production
+
+## 🎯 Getting Started
+
+1. Read `backend/SETUP.md` for installation
+2. Run `mvn spring-boot:run` in backend folder
+3. Open `CURSOR_PROMPTS.md`
+4. Start with Prompt 1 and work sequentially
+5. Test each feature in Swagger UI and H2 Console
+
+---
+
+**Ready to build!** 🚀 Open `CURSOR_PROMPTS.md` and start coding!

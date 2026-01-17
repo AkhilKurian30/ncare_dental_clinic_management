@@ -1,0 +1,78 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidebar -->
+  <mat-sidenav
+    #sidenav
+    class="sidenav"
+    [opened]="isSidenavOpened()"
+    [mode]="'side'"
+    [fixedInViewport]="true"
+  >
+    <div class="sidenav-header">
+      <mat-icon class="clinic-icon">local_hospital</mat-icon>
+      <h2>Dental Clinic</h2>
+    </div>
+
+    <mat-nav-list class="nav-list">
+      @for (item of filteredMenuItems; track item.route) {
+        <a
+          mat-list-item
+          [routerLink]="item.route"
+          routerLinkActive="active-link"
+          class="nav-item"
+        >
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+
+    <div class="sidenav-footer">
+      <div class="user-info">
+        <mat-icon>account_circle</mat-icon>
+        <div class="user-details">
+          <span class="user-name">{{ getUserDisplayName() }}</span>
+          <span class="user-role">{{ getUserRole() }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content class="sidenav-content">
+    <!-- Top Toolbar -->
+    <mat-toolbar color="primary" class="top-toolbar">
+      <button
+        mat-icon-button
+        (click)="toggleSidenav()"
+        aria-label="Toggle sidenav"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="toolbar-title">NCare Dental Clinic Management</span>
+
+      <span class="spacer"></span>
+
+      <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="User menu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+
+      <mat-menu #userMenu="matMenu">
+        <div class="user-menu-header">
+          <strong>{{ getUserDisplayName() }}</strong>
+          <span class="user-menu-email">{{ currentUser()?.email }}</span>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <!-- Page Content -->
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
