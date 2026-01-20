@@ -1,0 +1,60 @@
+<div class="calendar-full-container">
+  <div class="calendar-header">
+    <h1>Appointments Calendar</h1>
+    <div class="header-actions">
+      <button mat-stroked-button routerLink="/appointments/list">
+        <mat-icon>list</mat-icon>
+        List View
+      </button>
+      <button mat-icon-button (click)="onRefresh()" matTooltip="Refresh">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <button mat-raised-button color="primary" (click)="onBookAppointment()">
+        <mat-icon>add</mat-icon>
+        Book Appointment
+      </button>
+    </div>
+  </div>
+
+  <mat-card class="calendar-card">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <p>Loading calendar...</p>
+      </div>
+    } @else {
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    }
+  </mat-card>
+
+  <mat-card class="legend-card">
+    <h3>Status Legend</h3>
+    <div class="legend-items">
+      <div class="legend-item">
+        <span class="legend-color" style="background-color: #3b82f6;"></span>
+        <span>Scheduled</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color" style="background-color: #10b981;"></span>
+        <span>Confirmed</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color" style="background-color: #8b5cf6;"></span>
+        <span>Completed</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color" style="background-color: #ef4444;"></span>
+        <span>Cancelled</span>
+      </div>
+    </div>
+    <div class="legend-info">
+      <p><strong>Tips:</strong></p>
+      <ul>
+        <li>Click on any date/time slot to create a new appointment</li>
+        <li>Click on an appointment to view patient details</li>
+        <li>Drag & drop to reschedule appointments</li>
+        <li>Resize events to change duration</li>
+        <li>Use toolbar buttons to switch between Month, Week, Day, and List views</li>
+      </ul>
+    </div>
+  </mat-card>
+</div>

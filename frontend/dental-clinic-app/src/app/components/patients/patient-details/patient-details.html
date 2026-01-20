@@ -1,0 +1,247 @@
+<div class="patient-details-container">
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Loading patient details...</p>
+    </div>
+  } @else if (patient()) {
+    <!-- Header Section -->
+    <div class="page-header">
+      <button mat-button (click)="onBack()" class="back-button">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Patients
+      </button>
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" (click)="onNewAppointment()">
+          <mat-icon>event</mat-icon>
+          New Appointment
+        </button>
+        <button mat-raised-button color="accent" (click)="onEdit()">
+          <mat-icon>edit</mat-icon>
+          Edit Patient
+        </button>
+        <button mat-raised-button color="warn" (click)="onDelete()">
+          <mat-icon>delete</mat-icon>
+          Delete Patient
+        </button>
+      </div>
+    </div>
+
+    <!-- Patient Info Card -->
+    <mat-card class="patient-info-card">
+      <mat-card-content>
+        <div class="patient-header">
+          <div class="patient-avatar-large">
+            {{ getInitials(patient()!) }}
+          </div>
+          <div class="patient-info">
+            <h1 class="patient-name">{{ patient()!.fullName }}</h1>
+            <div class="patient-meta">
+              <mat-chip class="info-chip">
+                <mat-icon>cake</mat-icon>
+                {{ calculateAge(patient()!.dateOfBirth) }} years old
+              </mat-chip>
+              <mat-chip class="info-chip">
+                <mat-icon>wc</mat-icon>
+                {{ patient()!.gender }}
+              </mat-chip>
+              @if (patient()!.bloodGroup) {
+                <mat-chip class="blood-group-chip">
+                  <mat-icon>bloodtype</mat-icon>
+                  {{ patient()!.bloodGroup }}
+                </mat-chip>
+              }
+              <mat-chip [class.active-chip]="patient()!.active" [class.inactive-chip]="!patient()!.active">
+                {{ patient()!.active ? 'Active' : 'Inactive' }}
+              </mat-chip>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Tabs Section -->
+    <mat-tab-group class="patient-tabs" animationDuration="300ms">
+      <!-- Overview Tab -->
+      <mat-tab label="Overview">
+        <div class="tab-content">
+          <div class="info-grid">
+            <!-- Personal Information -->
+            <mat-card class="info-section">
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon>person</mat-icon>
+                  Personal Information
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="info-row">
+                  <span class="label">Full Name:</span>
+                  <span class="value">{{ patient()!.fullName }}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="info-row">
+                  <span class="label">Date of Birth:</span>
+                  <span class="value">{{ formatDate(patient()!.dateOfBirth) }}</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="info-row">
+                  <span class="label">Age:</span>
+                  <span class="value">{{ calculateAge(patient()!.dateOfBirth) }} years</span>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="info-row">
+                  <span class="label">Gender:</span>
+                  <span class="value">{{ patient()!.gender }}</span>
+                </div>
+                @if (patient()!.bloodGroup) {
+                  <mat-divider></mat-divider>
+                  <div class="info-row">
+                    <span class="label">Blood Group:</span>
+                    <span class="value">{{ patient()!.bloodGroup }}</span>
+                  </div>
+                }
+              </mat-card-content>
+            </mat-card>
+
+            <!-- Contact Information -->
+            <mat-card class="info-section">
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon>contact_phone</mat-icon>
+                  Contact Information
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="info-row">
+                  <span class="label">Phone:</span>
+                  <span class="value">{{ patient()!.phone }}</span>
+                </div>
+                @if (patient()!.email) {
+                  <mat-divider></mat-divider>
+                  <div class="info-row">
+                    <span class="label">Email:</span>
+                    <span class="value">{{ patient()!.email }}</span>
+                  </div>
+                }
+                @if (patient()!.address) {
+                  <mat-divider></mat-divider>
+                  <div class="info-row">
+                    <span class="label">Address:</span>
+                    <span class="value">{{ patient()!.address }}</span>
+                  </div>
+                }
+              </mat-card-content>
+            </mat-card>
+
+            <!-- Emergency Contact -->
+            @if (patient()!.emergencyContact || patient()!.emergencyPhone) {
+              <mat-card class="info-section">
+                <mat-card-header>
+                  <mat-card-title>
+                    <mat-icon>contact_emergency</mat-icon>
+                    Emergency Contact
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  @if (patient()!.emergencyContact) {
+                    <div class="info-row">
+                      <span class="label">Contact Name:</span>
+                      <span class="value">{{ patient()!.emergencyContact }}</span>
+                    </div>
+                  }
+                  @if (patient()!.emergencyPhone) {
+                    @if (patient()!.emergencyContact) {
+                      <mat-divider></mat-divider>
+                    }
+                    <div class="info-row">
+                      <span class="label">Contact Phone:</span>
+                      <span class="value">{{ patient()!.emergencyPhone }}</span>
+                    </div>
+                  }
+                </mat-card-content>
+              </mat-card>
+            }
+
+            <!-- Medical Information -->
+            @if (patient()!.allergies || patient()!.notes) {
+              <mat-card class="info-section">
+                <mat-card-header>
+                  <mat-card-title>
+                    <mat-icon>medical_services</mat-icon>
+                    Medical Information
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  @if (patient()!.allergies) {
+                    <div class="info-row">
+                      <span class="label">Allergies:</span>
+                      <span class="value">{{ patient()!.allergies }}</span>
+                    </div>
+                  }
+                  @if (patient()!.notes) {
+                    @if (patient()!.allergies) {
+                      <mat-divider></mat-divider>
+                    }
+                    <div class="info-row">
+                      <span class="label">Notes:</span>
+                      <span class="value">{{ patient()!.notes }}</span>
+                    </div>
+                  }
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Appointments Tab -->
+      <mat-tab label="Appointments">
+        <div class="tab-content">
+          <div class="empty-state">
+            <mat-icon>event</mat-icon>
+            <h3>No Appointments Yet</h3>
+            <p>Appointments will be displayed here once they are scheduled.</p>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Treatments Tab -->
+      <mat-tab label="Treatments">
+        <div class="tab-content">
+          <div class="empty-state">
+            <mat-icon>healing</mat-icon>
+            <h3>No Treatments Yet</h3>
+            <p>Treatment history will be displayed here.</p>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Invoices Tab -->
+      <mat-tab label="Invoices">
+        <div class="tab-content">
+          <div class="empty-state">
+            <mat-icon>receipt</mat-icon>
+            <h3>No Invoices Yet</h3>
+            <p>Invoices will be displayed here once created.</p>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Documents Tab -->
+      <mat-tab label="Documents">
+        <div class="tab-content">
+          <div class="empty-state">
+            <mat-icon>folder</mat-icon>
+            <h3>No Documents Yet</h3>
+            <p>Patient documents and files will be displayed here once uploaded.</p>
+            <button mat-raised-button color="primary" class="upload-button" disabled>
+              <mat-icon>upload_file</mat-icon>
+              Upload Document
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  }
+</div>

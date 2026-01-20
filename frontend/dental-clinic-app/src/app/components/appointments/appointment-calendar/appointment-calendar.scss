@@ -1,0 +1,256 @@
+.calendar-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .header-actions {
+      button mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .calendar-card {
+    padding: 24px;
+    margin-bottom: 24px;
+
+    .calendar-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 24px;
+
+      h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+        color: #1e293b;
+        min-width: 200px;
+        text-align: center;
+      }
+
+      button[mat-stroked-button] {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+
+    .loading-state {
+      padding: 48px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      background-color: #e2e8f0;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+
+      .calendar-weekday {
+        background-color: #f8fafc;
+        padding: 12px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 14px;
+        color: #475569;
+      }
+
+      .calendar-day {
+        background-color: white;
+        min-height: 120px;
+        padding: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #f8fafc;
+        }
+
+        &.other-month {
+          background-color: #f8fafc;
+          
+          .day-number {
+            color: #94a3b8;
+          }
+        }
+
+        &.today {
+          .day-number {
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+
+        .day-number {
+          font-size: 14px;
+          font-weight: 600;
+          color: #1e293b;
+          margin-bottom: 4px;
+        }
+
+        .day-appointments {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+
+          .appointment-item {
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+
+            .apt-time {
+              font-weight: 600;
+            }
+
+            .apt-patient {
+              font-size: 10px;
+              opacity: 0.9;
+            }
+
+            &.status-scheduled {
+              background-color: #dbeafe;
+              color: #1e40af;
+            }
+
+            &.status-confirmed {
+              background-color: #d1fae5;
+              color: #065f46;
+            }
+
+            &.status-completed {
+              background-color: #e0e7ff;
+              color: #4338ca;
+            }
+
+            &.status-cancelled {
+              background-color: #fee2e2;
+              color: #991b1b;
+              text-decoration: line-through;
+            }
+          }
+
+          .more-appointments {
+            font-size: 10px;
+            color: #64748b;
+            font-weight: 600;
+            margin-top: 2px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  .legend-card {
+    padding: 16px 24px;
+
+    h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .legend-items {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #475569;
+
+        .legend-color {
+          width: 24px;
+          height: 24px;
+          border-radius: 4px;
+
+          &.status-scheduled {
+            background-color: #dbeafe;
+          }
+
+          &.status-confirmed {
+            background-color: #d1fae5;
+          }
+
+          &.status-completed {
+            background-color: #e0e7ff;
+          }
+
+          &.status-cancelled {
+            background-color: #fee2e2;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .calendar-container {
+    padding: 16px;
+
+    .calendar-card {
+      .calendar-grid {
+        .calendar-day {
+          min-height: 80px;
+          padding: 4px;
+
+          .day-appointments {
+            .appointment-item {
+              font-size: 10px;
+
+              .apt-time {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .legend-card {
+      .legend-items {
+        gap: 12px;
+
+        .legend-item {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

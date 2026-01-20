@@ -6,9 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { DashboardService } from '../../services/dashboard.service';
+import { NotificationService } from '../../services/notification.service';
 import {
   DashboardStats,
   AppointmentsByStatus,
@@ -27,6 +29,7 @@ import {
     MatTableModule,
     MatChipsModule,
     MatTooltipModule,
+    MatSnackBarModule,
     BaseChartDirective
   ],
   templateUrl: './dashboard.html',
@@ -34,6 +37,7 @@ import {
 })
 export class DashboardComponent implements OnInit {
   private dashboardService = inject(DashboardService);
+  private notificationService = inject(NotificationService);
 
   stats = signal<DashboardStats | null>(null);
   upcomingAppointments = signal<RecentAppointment[]>([]);
@@ -116,6 +120,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error loading statistics:', error);
+        this.notificationService.error('Failed to load dashboard statistics');
         this.isLoading.set(false);
       }
     });
@@ -132,7 +137,10 @@ export class DashboardComponent implements OnInit {
           }]
         });
       },
-      error: (error) => console.error('Error loading appointments by status:', error)
+      error: (error) => {
+        console.error('Error loading appointments by status:', error);
+        this.notificationService.warning('Could not load appointments chart data');
+      }
     });
 
     // Load revenue by month for bar chart
@@ -149,13 +157,19 @@ export class DashboardComponent implements OnInit {
           }]
         });
       },
-      error: (error) => console.error('Error loading revenue by month:', error)
+      error: (error) => {
+        console.error('Error loading revenue by month:', error);
+        this.notificationService.warning('Could not load revenue chart data');
+      }
     });
 
     // Load upcoming appointments
     this.dashboardService.getUpcomingAppointments(10).subscribe({
       next: (appointments) => this.upcomingAppointments.set(appointments),
-      error: (error) => console.error('Error loading upcoming appointments:', error)
+      error: (error) => {
+        console.error('Error loading upcoming appointments:', error);
+        this.notificationService.warning('Could not load upcoming appointments');
+      }
     });
   }
 

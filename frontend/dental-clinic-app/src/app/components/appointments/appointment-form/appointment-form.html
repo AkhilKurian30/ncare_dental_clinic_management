@@ -1,0 +1,144 @@
+<div class="appointment-form-dialog">
+  <h2 mat-dialog-title>
+    <mat-icon>{{ data.mode === 'create' ? 'add_circle' : 'edit' }}</mat-icon>
+    {{ data.mode === 'create' ? 'Book New Appointment' : 'Edit Appointment' }}
+  </h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="appointmentForm" class="appointment-form">
+      <!-- Patient Search -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Search Patient</mat-label>
+        <input matInput
+               type="text"
+               formControlName="patientSearch"
+               [matAutocomplete]="autoPatient"
+               placeholder="Search by name or phone">
+        <mat-icon matPrefix>search</mat-icon>
+        <mat-autocomplete #autoPatient="matAutocomplete"
+                          [displayWith]="displayPatient"
+                          (optionSelected)="onPatientSelected($event.option.value)">
+          @for (patient of filteredPatients(); track patient.id) {
+            <mat-option [value]="patient">
+              <div class="patient-option">
+                <strong>{{ patient.fullName }}</strong>
+                <small>{{ patient.phone }}</small>
+              </div>
+            </mat-option>
+          }
+        </mat-autocomplete>
+        @if (appointmentForm.get('patientId')?.hasError('required') && 
+             appointmentForm.get('patientId')?.touched) {
+          <mat-error>Patient is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Doctor -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Doctor</mat-label>
+        <mat-select formControlName="doctorId">
+          @for (doctor of doctors(); track doctor.id) {
+            <mat-option [value]="doctor.id">{{ doctor.name }}</mat-option>
+          }
+        </mat-select>
+        <mat-icon matPrefix>person</mat-icon>
+        @if (appointmentForm.get('doctorId')?.hasError('required') && 
+             appointmentForm.get('doctorId')?.touched) {
+          <mat-error>Doctor is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Date and Time Row -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Appointment Date</mat-label>
+          <input matInput
+                 [matDatepicker]="picker"
+                 formControlName="appointmentDate"
+                 [min]="getMinDate()">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (appointmentForm.get('appointmentDate')?.hasError('required') && 
+               appointmentForm.get('appointmentDate')?.touched) {
+            <mat-error>Date is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Time</mat-label>
+          <mat-select formControlName="appointmentTime">
+            @if (loadingSlots()) {
+              <mat-option disabled>Loading available slots...</mat-option>
+            } @else if (availableSlots().length === 0) {
+              <mat-option disabled>No slots available</mat-option>
+            } @else {
+              @for (slot of availableSlots(); track slot.startTime) {
+                <mat-option [value]="formatSlotTime(slot)">
+                  {{ formatSlotTime(slot) }}
+                </mat-option>
+              }
+            }
+          </mat-select>
+          <mat-icon matPrefix>schedule</mat-icon>
+          @if (appointmentForm.get('appointmentTime')?.hasError('required') && 
+               appointmentForm.get('appointmentTime')?.touched) {
+            <mat-error>Time is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <!-- Duration -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Duration</mat-label>
+        <mat-select formControlName="duration">
+          @for (duration of durations; track duration.value) {
+            <mat-option [value]="duration.value">{{ duration.label }}</mat-option>
+          }
+        </mat-select>
+        <mat-icon matPrefix>timer</mat-icon>
+        @if (appointmentForm.get('duration')?.hasError('required') && 
+             appointmentForm.get('duration')?.touched) {
+          <mat-error>Duration is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Reason -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Reason for Visit</mat-label>
+        <textarea matInput
+                  formControlName="reason"
+                  rows="3"
+                  placeholder="Enter reason for the appointment"></textarea>
+        <mat-icon matPrefix>description</mat-icon>
+      </mat-form-field>
+
+      <!-- Notes -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Additional Notes</mat-label>
+        <textarea matInput
+                  formControlName="notes"
+                  rows="3"
+                  placeholder="Any additional notes"></textarea>
+        <mat-icon matPrefix>note</mat-icon>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()" [disabled]="isSaving()">
+      Cancel
+    </button>
+    <button mat-raised-button 
+            color="primary" 
+            (click)="onSubmit()" 
+            [disabled]="isSaving()">
+      @if (isSaving()) {
+        <mat-spinner diameter="20"></mat-spinner>
+        <span>Saving...</span>
+      } @else {
+        <mat-icon>{{ data.mode === 'create' ? 'add' : 'save' }}</mat-icon>
+        <span>{{ data.mode === 'create' ? 'Book Appointment' : 'Update Appointment' }}</span>
+      }
+    </button>
+  </mat-dialog-actions>
+</div>

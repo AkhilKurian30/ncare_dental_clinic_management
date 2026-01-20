@@ -1,0 +1,215 @@
+.patient-list-container {
+  padding: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  .page-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  button {
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.search-card {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  mat-card-content {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+
+    .search-field {
+      flex: 1;
+      margin: 0;
+    }
+  }
+}
+
+.table-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  mat-card-content {
+    padding: 0;
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  color: #64748b;
+
+  .loading-spinner {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    animation: spin 1s linear infinite;
+  }
+
+  p {
+    margin-top: 16px;
+    font-size: 16px;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.patients-table {
+  width: 100%;
+
+  th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 16px;
+  }
+
+  td {
+    padding: 16px;
+    color: #334155;
+    font-size: 14px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .table-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f8fafc;
+    }
+  }
+
+  .patient-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .patient-name {
+    font-weight: 500;
+    color: #1e293b;
+  }
+
+  .blood-group-chip {
+    font-size: 12px;
+    font-weight: 600;
+    height: 24px;
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+
+  .no-data-row {
+    td {
+      border: none;
+    }
+  }
+
+  .no-data-cell {
+    text-align: center;
+    padding: 48px 16px;
+    color: #94a3b8;
+
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .patients-table {
+    .mat-column-email {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
+    .page-title {
+      font-size: 24px;
+    }
+  }
+
+  .search-card mat-card-content {
+    flex-direction: column;
+
+    .search-field {
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .patients-table {
+    .mat-column-bloodGroup {
+      display: none;
+    }
+
+    th, td {
+      padding: 12px 8px;
+      font-size: 12px;
+    }
+
+    .patient-avatar {
+      width: 32px;
+      height: 32px;
+      font-size: 12px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .patients-table {
+    .mat-column-age,
+    .mat-column-phone {
+      display: none;
+    }
+  }
+}

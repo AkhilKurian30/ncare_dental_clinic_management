@@ -1,0 +1,165 @@
+.appointment-list-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      
+      button {
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  .filter-card {
+    margin-bottom: 24px;
+    padding: 16px;
+
+    .filters {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+
+      .filter-field {
+        min-width: 200px;
+      }
+    }
+  }
+
+  .table-card {
+    padding: 0;
+
+    .loading-state,
+    .empty-state {
+      padding: 48px;
+      text-align: center;
+
+      mat-icon {
+        font-size: 64px;
+        width: 64px;
+        height: 64px;
+        color: #94a3b8;
+        margin-bottom: 16px;
+      }
+
+      h2 {
+        margin: 0 0 8px 0;
+        color: #475569;
+        font-size: 20px;
+      }
+
+      p {
+        margin: 0 0 24px 0;
+        color: #64748b;
+      }
+    }
+
+    .table-container {
+      overflow-x: auto;
+
+      .appointments-table {
+        width: 100%;
+
+        th {
+          background-color: #f8fafc;
+          font-weight: 600;
+          color: #475569;
+          padding: 16px;
+        }
+
+        td {
+          padding: 16px;
+          border-bottom: 1px solid #e2e8f0;
+
+          .datetime-cell,
+          .doctor-cell,
+          .duration-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            .cell-icon {
+              font-size: 18px;
+              width: 18px;
+              height: 18px;
+              color: #64748b;
+            }
+          }
+
+          .patient-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            strong {
+              color: #1e293b;
+              font-weight: 500;
+            }
+
+            small {
+              color: #64748b;
+              font-size: 13px;
+            }
+          }
+
+          .action-buttons {
+            display: flex;
+            gap: 4px;
+          }
+        }
+
+        mat-chip {
+          font-size: 12px;
+          font-weight: 600;
+          min-height: 28px;
+          padding: 4px 12px;
+
+          &.status-scheduled {
+            background-color: #dbeafe;
+            color: #1e40af;
+          }
+
+          &.status-confirmed {
+            background-color: #d1fae5;
+            color: #065f46;
+          }
+
+          &.status-completed {
+            background-color: #e0e7ff;
+            color: #4338ca;
+          }
+
+          &.status-cancelled {
+            background-color: #fee2e2;
+            color: #991b1b;
+          }
+        }
+
+        tr.mat-row:hover {
+          background-color: #f8fafc;
+        }
+      }
+    }
+
+    mat-paginator {
+      border-top: 1px solid #e2e8f0;
+    }
+  }
+}

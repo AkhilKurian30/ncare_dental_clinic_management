@@ -1,0 +1,103 @@
+.appointment-form-dialog {
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 20px 24px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1e293b;
+    border-bottom: 2px solid #e2e8f0;
+
+    mat-icon {
+      color: #3b82f6;
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  mat-dialog-content {
+    padding: 24px;
+    max-height: 70vh;
+    overflow-y: auto;
+
+    .appointment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .full-width {
+        width: 100%;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 16px;
+
+        .half-width {
+          flex: 1;
+        }
+      }
+
+      .patient-option {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        strong {
+          font-size: 14px;
+          color: #1e293b;
+        }
+
+        small {
+          font-size: 12px;
+          color: #64748b;
+        }
+      }
+
+      mat-form-field {
+        mat-icon[matPrefix] {
+          margin-right: 8px;
+          color: #64748b;
+        }
+      }
+    }
+  }
+
+  mat-dialog-actions {
+    padding: 16px 24px;
+    border-top: 1px solid #e2e8f0;
+    gap: 12px;
+
+    button {
+      min-width: 120px;
+
+      &[mat-raised-button] {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        mat-spinner {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 600px) {
+  .appointment-form-dialog {
+    .appointment-form {
+      .form-row {
+        flex-direction: column;
+
+        .half-width {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

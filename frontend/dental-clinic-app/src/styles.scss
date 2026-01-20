@@ -36,3 +36,56 @@ body {
   height: 100%;
 }
 /* You can add global styles to this file, and also import other style files */
+
+/* Toast Notification Styles */
+.toast-success {
+  .mat-mdc-snack-bar-container {
+    --mat-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-container-color: #10b981;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+    
+    .mat-mdc-button.mat-mdc-snack-bar-action {
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+  }
+}
+
+.toast-error {
+  .mat-mdc-snack-bar-container {
+    --mat-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-container-color: #ef4444;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+    
+    .mat-mdc-button.mat-mdc-snack-bar-action {
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+  }
+}
+
+.toast-warning {
+  .mat-mdc-snack-bar-container {
+    --mat-snack-bar-button-color: #1f2937;
+    --mdc-snackbar-container-color: #fbbf24;
+    --mdc-snackbar-supporting-text-color: #1f2937;
+    
+    .mat-mdc-button.mat-mdc-snack-bar-action {
+      color: #1f2937 !important;
+      font-weight: 600;
+    }
+  }
+}
+
+.toast-info {
+  .mat-mdc-snack-bar-container {
+    --mat-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-container-color: #3b82f6;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+    
+    .mat-mdc-button.mat-mdc-snack-bar-action {
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+  }
+}

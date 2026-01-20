@@ -41,4 +41,9 @@ public class User extends BaseEntity {
 
     @Column(name = "active", nullable = false)
     private Boolean active = true;
+
+    // Helper method to get full name
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

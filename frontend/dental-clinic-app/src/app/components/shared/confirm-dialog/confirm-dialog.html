@@ -1,0 +1,49 @@
+<div class="confirm-dialog">
+  <div class="dialog-header" [class.danger-header]="data.type === 'danger'">
+    <mat-icon [class]="getIconClass()">{{ getIconName() }}</mat-icon>
+    <h2 mat-dialog-title>{{ data.title }}</h2>
+  </div>
+
+  <mat-dialog-content>
+    <p class="dialog-message">{{ data.message }}</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    @if (data.type === 'danger') {
+      <button 
+        mat-stroked-button 
+        color="primary"
+        class="cancel-button"
+        cdkFocusInitial
+        (click)="onCancel()">
+        <mat-icon>close</mat-icon>
+        {{ data.cancelText || 'Cancel' }}
+      </button>
+      <button 
+        mat-raised-button 
+        class="danger-button"
+        (click)="onConfirm()">
+        <mat-icon>delete</mat-icon>
+        {{ data.confirmText || 'Confirm' }}
+      </button>
+    } @else {
+      <button 
+        mat-stroked-button 
+        color="primary"
+        class="cancel-button"
+        (click)="onCancel()">
+        <mat-icon>close</mat-icon>
+        {{ data.cancelText || 'Cancel' }}
+      </button>
+      <button 
+        mat-raised-button 
+        [class.warning-button]="data.type === 'warning'"
+        [class.info-button]="data.type === 'info' || !data.type"
+        cdkFocusInitial
+        (click)="onConfirm()">
+        <mat-icon>check</mat-icon>
+        {{ data.confirmText || 'Confirm' }}
+      </button>
+    }
+  </mat-dialog-actions>
+</div>

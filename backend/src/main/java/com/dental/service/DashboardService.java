@@ -23,15 +23,18 @@ import java.util.UUID;
 public class DashboardService {
 
     private final Random random = new Random();
+    private final PatientService patientService;
 
     /**
      * Get dashboard statistics
-     * Note: This returns mock data until Patient, Appointment, and Invoice entities are implemented
+     * Note: Patient count is real, other stats are mock data until entities are implemented
      */
     public DashboardStatsDTO getStatistics() {
+        long totalPatients = patientService.countActivePatients();
+        
         return DashboardStatsDTO.builder()
                 .todayAppointments(5L)
-                .totalPatients(156L)
+                .totalPatients(totalPatients)
                 .monthlyRevenue(new BigDecimal("45000.00"))
                 .pendingInvoices(8L)
                 .totalAppointments(245L)

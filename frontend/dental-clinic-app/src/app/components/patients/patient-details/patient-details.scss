@@ -1,0 +1,262 @@
+.patient-details-container {
+  padding: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  color: #64748b;
+
+  p {
+    margin-top: 16px;
+    font-size: 16px;
+  }
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  .back-button {
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+
+    button {
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.patient-info-card {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  .patient-header {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+
+    .patient-avatar-large {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+
+    .patient-info {
+      flex: 1;
+
+      .patient-name {
+        font-size: 32px;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0 0 12px 0;
+      }
+
+      .patient-meta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        .info-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          background-color: #f1f5f9;
+          color: #475569;
+          height: 32px;
+
+          mat-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+          }
+        }
+
+        .blood-group-chip {
+          background-color: #fee2e2;
+          color: #991b1b;
+          font-weight: 600;
+        }
+
+        .active-chip {
+          background-color: #dcfce7;
+          color: #166534;
+          font-weight: 600;
+        }
+
+        .inactive-chip {
+          background-color: #fee2e2;
+          color: #991b1b;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+.patient-tabs {
+  mat-tab-group {
+    border-radius: 12px;
+  }
+
+  .tab-content {
+    padding: 24px 0;
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.info-section {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  mat-card-header {
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e293b;
+
+      mat-icon {
+        color: #3b82f6;
+      }
+    }
+  }
+
+  mat-card-content {
+    padding-top: 16px;
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      gap: 16px;
+
+      .label {
+        font-weight: 500;
+        color: #64748b;
+        flex-shrink: 0;
+      }
+
+      .value {
+        color: #1e293b;
+        text-align: right;
+        word-break: break-word;
+      }
+    }
+
+    mat-divider {
+      margin: 0;
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  text-align: center;
+  color: #94a3b8;
+
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #64748b;
+  }
+
+  p {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+  }
+
+  .upload-button {
+    margin-top: 8px;
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
+    .back-button {
+      width: 100%;
+    }
+
+    .action-buttons {
+      width: 100%;
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  .patient-info-card {
+    .patient-header {
+      flex-direction: column;
+      text-align: center;
+
+      .patient-info {
+        .patient-name {
+          font-size: 24px;
+        }
+
+        .patient-meta {
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}

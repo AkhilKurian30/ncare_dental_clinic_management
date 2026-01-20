@@ -1,0 +1,91 @@
+<div class="calendar-container">
+  <div class="calendar-header">
+    <h1>Appointment Calendar</h1>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="openAppointmentDialog()">
+        <mat-icon>add</mat-icon>
+        Book Appointment
+      </button>
+    </div>
+  </div>
+
+  <mat-card class="calendar-card">
+    <div class="calendar-controls">
+      <button mat-icon-button (click)="previousMonth()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <h2>{{ getMonthYear() }}</h2>
+      <button mat-icon-button (click)="nextMonth()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+      <button mat-stroked-button (click)="goToToday()">
+        <mat-icon>today</mat-icon>
+        Today
+      </button>
+    </div>
+
+    @if (isLoading()) {
+      <div class="loading-state">
+        <p>Loading calendar...</p>
+      </div>
+    } @else {
+      <div class="calendar-grid">
+        <!-- Week Day Headers -->
+        @for (day of weekDays; track day) {
+          <div class="calendar-weekday">{{ day }}</div>
+        }
+
+        <!-- Calendar Days -->
+        @for (day of calendarDays(); track day.date) {
+          <div class="calendar-day"
+               [class.other-month]="!day.isCurrentMonth"
+               [class.today]="day.isToday"
+               [class.has-appointments]="day.appointments.length > 0"
+               (click)="onDayClick(day)">
+            <div class="day-number">{{ day.date.getDate() }}</div>
+            
+            @if (day.appointments.length > 0) {
+              <div class="day-appointments">
+                @for (apt of day.appointments.slice(0, 3); track apt.id) {
+                  <div class="appointment-item" 
+                       [class]="getStatusClass(apt.status)"
+                       [matTooltip]="apt.patientName + ' - ' + formatTime(apt.appointmentDate)">
+                    <span class="apt-time">{{ formatTime(apt.appointmentDate) }}</span>
+                    <span class="apt-patient">{{ apt.patientName }}</span>
+                  </div>
+                }
+                @if (day.appointments.length > 3) {
+                  <div class="more-appointments">
+                    +{{ day.appointments.length - 3 }} more
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </mat-card>
+
+  <mat-card class="legend-card">
+    <h3>Status Legend</h3>
+    <div class="legend-items">
+      <div class="legend-item">
+        <span class="legend-color status-scheduled"></span>
+        <span>Scheduled</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color status-confirmed"></span>
+        <span>Confirmed</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color status-completed"></span>
+        <span>Completed</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color status-cancelled"></span>
+        <span>Cancelled</span>
+      </div>
+    </div>
+  </mat-card>
+</div>
